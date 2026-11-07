@@ -42,4 +42,28 @@
 **IOCs:** Spoofed-bank domain, financial-themed subject, T1053.005 pattern
 
 ---
+## Alert #3
+**Date:** 2023-06-21
+**Alert Title:** SOC210 - Possible Brute Force Detected on VPN
+**Severity:** High
+**Source:** External IP (VPN/hosting provider) - redacted as 203.0.113.x
+**Target:** VPN gateway (internal, redacted as 10.x.x.x)
 
+**Hypothesis:** Password spraying + username enumeration via automated tool
+
+**Evidence:**
+- 10 login attempts in 8 minutes, mixed "unknown username" and
+  "wrong password" responses (enumeration + spraying pattern)
+- 10th attempt succeeded on a valid account
+- IP reputation clean on VirusTotal, but sourced from a commercial
+  VPN/hosting provider commonly abused for this attack type
+- Scope confirmed: single target system, no lateral spread
+
+**Classification:** True Positive - Malicious
+**Action Taken:** Isolated compromised account, blocked attacker IP,
+recommended MFA enforcement and account lockout policy
+**Time to Triage:** ~25 minutes
+**IOCs:** Attacker IP (redacted), mixed-failure login pattern, VPN
+gateway (redacted)
+
+---
