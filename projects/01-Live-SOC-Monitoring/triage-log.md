@@ -15,6 +15,7 @@
 **Classification:** True Positive - Malicious
 **Action Taken:** Flagged for user awareness, recommended sender block
 **Time to Triage:** ~10 minutes
+
 **IOCs:** Free-mail sender pattern, urgency-themed subject line
 
 ---
@@ -37,6 +38,7 @@
 **Classification:** True Positive - Malicious (Blocked)
 **Action Taken:** No action needed — email was automatically blocked
 **Time to Triage:** ~8 minutes
+
 **IOCs:** Spoofed-bank domain, financial-themed subject, T1053.005 pattern
 
 ---
