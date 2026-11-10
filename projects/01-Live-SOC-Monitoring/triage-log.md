@@ -104,3 +104,35 @@ negative log search result is not conclusive without verifying
 search scope first.
 
 ---
+## Alert #5
+**Date:** 2025-01-22
+**Alert Title:** SOC335 - CVE-2024-49138 Exploitation Detected
+**Severity:** Medium
+**Source:** Local host (redacted as "Host A")
+**Target:** N/A (local privilege escalation, not network-based)
+
+**Hypothesis:** Privilege escalation via masquerading malware exploiting CVE-2024-49138
+
+**Evidence:**
+- Malicious file "svohost.exe" masqueraded as legitimate
+  "svchost.exe", executed from non-standard path (C:\temp\...)
+- Spawned by powershell.exe; file hash confirmed malicious on
+  VirusTotal
+- EDR showed the process subsequently spawned its own PowerShell
+  child process running under NT AUTHORITY\SYSTEM (confirmed
+  privilege escalation)
+- VirusTotal sandbox behavior showed only legitimate Microsoft
+  domains and local network traffic - no clear C2 indicator
+  (treated as inconclusive, not definitive)
+- MITRE: T1059.001, T1055, T1068, T1548, T1110
+
+**Classification:** True Positive - Malicious (Confirmed privilege escalation)
+**Action Taken:** Host contained via EDR; recommended patching
+against CVE-2024-49138 and direct Log Management review for C2
+**Time to Triage:** ~15 minutes
+**IOCs:** File hash:
+b432dcf4a0f0b601b1d79848467137a5e25cab5a0b7b1224be9d3b6540122db9;
+masquerading filename pattern (svohost.exe vs svchost.exe);
+non-standard execution path (C:\temp\service_installer\)
+
+---
