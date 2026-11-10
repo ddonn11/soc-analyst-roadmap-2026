@@ -67,3 +67,40 @@ recommended MFA enforcement and account lockout policy
 gateway (redacted)
 
 ---
+## Alert #4
+**Date:** 2025-03-13
+**Alert Title:** SOC338 - Lumma Stealer DLL Side-Loading via ClickFix Phishing
+**Severity:** Critical
+**Source:** Spoofed domain impersonating Microsoft (redacted as "Company X")
+**Target:** user@example.com
+
+**Hypothesis:** ClickFix-style phishing leading to malware (Lumma Stealer) deployment
+
+**Evidence:**
+- Email impersonated a Microsoft domain (confirmed malicious by
+  12/93 vendors on VirusTotal), offered free Windows 11 upgrade
+- Device Action: Allowed - email reached the inbox
+- Log Management confirmed outbound C2 communication from the
+  recipient's device (initial search missed this - see note below)
+- EDR containment found multiple malicious .exe files actively
+  running on the endpoint
+- Alert mapped to 8 MITRE ATT&CK techniques covering the full
+  ClickFix kill chain (T1204, T1204.001, T1574, T1574.002, T1059,
+  T1059.001, T1027, T1105)
+
+**Classification:** True Positive - Malicious (Confirmed Compromise)
+**Action Taken:**
+1. Deleted malicious email from recipient's mailbox
+2. Isolated affected device via EDR
+3. Identified and will investigate multiple malicious executables
+**Time to Triage:** ~35 minutes
+**IOCs:** Spoofed domain (redacted), SMTP address (redacted), Lumma
+Stealer malware family, ClickFix technique, multiple .exe payloads
+
+**Analyst Note:** Initial log search for C2 activity returned no
+results due to insufficient date-range scope. Re-running the search
+with corrected parameters confirmed the compromise. Lesson: a
+negative log search result is not conclusive without verifying
+search scope first.
+
+---
